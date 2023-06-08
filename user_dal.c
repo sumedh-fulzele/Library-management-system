@@ -24,3 +24,28 @@ int user_save(user_t *u){
     }
 }
 
+int user_find_by_email(char *email,user_t *u){
+    int found = 1;
+    FILE *fu;
+    
+    fu = fopen(USERS_FILE, "rb");
+    if(fu == NULL){
+        return 1;
+    }
+
+    while ( fread(u, sizeof(user_t), 1, fu) > 0){
+        if(strcmp(u->email ,email) == 0){            
+            found = 0;
+            break;
+        }
+    }
+
+    fclose(fu);
+
+    if(found == 0){
+        return 0;
+    }
+    else {
+        return 1 ;
+    }
+}
