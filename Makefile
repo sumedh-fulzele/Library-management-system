@@ -1,6 +1,6 @@
 
 TARGET=main
-CSRCS=$(TARGET).c user.c
+CSRCS=$(TARGET).c user_dal.c
 COBJS=$(CSRCS:.c=.o)
 
 CC=gcc
