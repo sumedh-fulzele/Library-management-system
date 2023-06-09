@@ -9,9 +9,9 @@ enum rol {owner, librarian, member};
 typedef struct user
 {
     int id;
-    char name[40];
-    char email[64];
-    char password[41];
+    char name[42];
+    char email[60];
+    char password[40];
     char phone[10];
     enum rol role;      //O - owner ,L - librarian, M - member
 }user_t;
