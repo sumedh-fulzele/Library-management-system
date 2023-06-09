@@ -3,5 +3,8 @@
 #ifndef __USER_CONTROL_H
 #define __USER_CONTROL_H
 
+#include"user.h"
+
+void accept_user(user_t *u);
 
 #endif
