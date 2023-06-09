@@ -4,6 +4,8 @@
 #include<string.h>
 #include"user.h"
 
+
+//saves structure u in USERS_FILE
 int user_save(user_t *u){
     FILE *fu;
     
@@ -15,8 +17,8 @@ int user_save(user_t *u){
     size_t recordwritten = fwrite(u, sizeof(user_t), 1,fu);
     fclose(fu);
     
-    if(recordwritten != 1)
-    {
+    // This check if record is written successfully or not in the USERS_FILE 
+    if(recordwritten != 1){
         return 0; //failure
     }
     else{
@@ -24,8 +26,10 @@ int user_save(user_t *u){
     }
 }
 
+
+// finds user by email in USER_FILE and saves record in *u
 int user_find_by_email(char *email, user_t *u){
-    int found = 0;
+    int found = 0;  //flag
     FILE *fu;
     
     fu = fopen(USERS_FILE, "rb");
@@ -42,16 +46,17 @@ int user_find_by_email(char *email, user_t *u){
 
     fclose(fu);
 
-    if(found == 1){
-        return 1;
+    if(!found){
+        return 0;
     }
-    else {
-        return 0 ;
+    else{
+        return 1;
     }
 }
 
+// finds user by email in USER_FILE and saves record in *u
 int user_find_by_id(int id, user_t *u){
-    int found = 0;
+    int found = 0;  //flag
     FILE *fu;
     
     fu = fopen(USERS_FILE, "rb");
@@ -68,17 +73,18 @@ int user_find_by_id(int id, user_t *u){
 
     fclose(fu);
 
-    if(found == 1){
-        return 1;
+    if(!found){
+        return 0;
     }
-    else {
-        return 0 ;
+    else{
+        return 1;
     }
 }
 
+//updates users data in USER_FILE
 int user_update(char *email, char *phone, int id){
     user_t u;
-    int updated = 0;
+    int updated = 0;    //flag
     long recsize = sizeof(user_t);
 
     FILE *fu;
@@ -89,13 +95,14 @@ int user_update(char *email, char *phone, int id){
 
     while( fread(&u, recsize , 1, fu) > 0 ) {
         
-        // if id is matching
+        // if id is matching or not
         if(id == u.id){
-          
+            
+            //copies date to respective fields
             strcpy(u.email,email);
             strcpy(u.phone,phone);
           
-            fseek(fu, -recsize, SEEK_CUR);  // move file pos to one record back
+            fseek(fu, -recsize, SEEK_CUR);  // move file fpos to one record back
             fwrite(&u, recsize , 1, fu);    // update changes into the file
             
             updated = 1;
