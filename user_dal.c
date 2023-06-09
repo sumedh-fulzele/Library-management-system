@@ -82,8 +82,10 @@ int user_find_by_id(int id, user_t *u){
 }
 
 //updates users data in USER_FILE
-int user_update(char *email, char *phone, int id){
-    user_t u;
+int user_update(user_t *u){
+    
+    user_t user_buff;
+    
     int updated = 0;    //flag
     long recsize = sizeof(user_t);
 
@@ -93,17 +95,18 @@ int user_update(char *email, char *phone, int id){
         return 0;
     }
 
-    while( fread(&u, recsize , 1, fu) > 0 ) {
+    while( fread(&user_buff, recsize , 1, fu) > 0 ) {
         
         // if id is matching or not
-        if(id == u.id){
+        if(&u->id == user_buff.id){
             
-            //copies date to respective fields
-            strcpy(u.email,email);
-            strcpy(u.phone,phone);
+            //copies date to the respective fields
+            strcpy(user_buff.email, &u->email);
+            strcpy(user_buff.phone, &u->phone);
+            strcpy(user_buff.password, &u->password);
           
             fseek(fu, -recsize, SEEK_CUR);  // move file fpos to one record back
-            fwrite(&u, recsize , 1, fu);    // update changes into the file
+            fwrite(&user_buff, recsize , 1, fu);    // update changes into the file
             
             updated = 1;
             break;
