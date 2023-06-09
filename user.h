@@ -4,6 +4,8 @@
 #define __USER_H
 #define USERS_FILE "users.db"
 
+enum rol {owner, librarian, member};
+
 typedef struct user
 {
     int id;
@@ -11,7 +13,7 @@ typedef struct user
     char email[64];
     char password[41];
     char phone[10];
-    char role;      //O - owner ,L - librarian, M - member
+    enum rol role;      //O - owner ,L - librarian, M - member
 }user_t;
 
 
