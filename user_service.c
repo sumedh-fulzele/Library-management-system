@@ -5,6 +5,7 @@
 #include"user.h"
 #include"user_dal.h"
 #include"user_service.h"
+#include"user_control.h"
 
 //validate user and return respective user data in *u.
 int user_authenticate(char *email, char *password, user_t *u){
@@ -25,4 +26,18 @@ int user_authenticate(char *email, char *password, user_t *u){
     else{
         return 1;
     }
+}
+
+int owner_register(user_t *u){
+    u->id = 1;
+    u->role = owner;
+    
+    remove(USERS_FILE);
+    if(user_save(&u) == 1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
 }

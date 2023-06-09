@@ -6,5 +6,6 @@
 #include"user.h"
 
 int user_authenticate(char *email, char *password , user_t *u);  //validate user and return respective user data in u.
+int owner_register(user_t *u);
 
 #endif
