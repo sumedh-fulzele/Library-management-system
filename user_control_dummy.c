@@ -11,7 +11,7 @@ void authuser(){
 
     int id;
     user_t u;
-    char *email = "sumedh@sunbeam.com";
+    char *email = "sumedh@sumedh.com";
     char *password = "sumedh";
     if(user_authenticate(email, password, &u) == 1)
     {
@@ -26,7 +26,7 @@ void authuser(){
 
 void findemail(){
     user_t u;
-    char email[60] = "sumedh@sumedh.com";
+    char email[60] = "sumedh@sunbeam.com";
     if(user_find_by_email(email, &u) == 1)
     {
         printf("record found");
@@ -57,9 +57,14 @@ void newuser(){
 }
 
 void updateuser(){
+    user_t u;
+    u.id = 1;
     char *email = "sumedh@sumedh.com";
     char *phone = "5862471239";
-    if(user_update(email, phone, 1) == 1)
+
+    strcpy(u.name,email);
+    strcpy(u.phone, phone);
+    if(user_update(&u) == 1)
     {
         printf("updated successfully\n");
     }
