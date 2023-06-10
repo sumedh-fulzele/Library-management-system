@@ -72,3 +72,17 @@ int librarian_register(user_t *u){
     }
  }
 
+int update_password(int id, char *new_passwd){
+    user_t u_temp;
+
+    if(user_find_by_id(id, &u_temp) == 1){
+
+        strcpy(u_temp.password, new_passwd);
+        if(user_update(&u_temp) == 1){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }   
+}
