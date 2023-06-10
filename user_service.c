@@ -8,7 +8,7 @@
 //validate user and return respective user data in *u.
 int user_authenticate(char *email, char *password, user_t *u){
     int found = 0;
-        printf("email found");
+    
     //comapares given email and password in db.
     if(user_find_by_email(email, u) == 1){
         if(strcmp(u->password,password) == 0){
@@ -41,19 +41,26 @@ int owner_register(user_t *u){
 
 }
 
+
 int member_register(user_t *u){
+    user_t new_member;
     u->id = get_max_id() + 1;
     u->role = member;
 
-    if(user_save(u) == 1){
-        return 1;
+    if(user_find_by_email(u->email, &new_member) == 1){
+        return 2;   // if found cannot register with same email. 
     }
     else{
-        return 0;
+        if(user_save(u) == 1){
+            return 1;   // member registered successfully.
+        }
+        else{
+            return 0;   //failed to register member
+        }
     }
-    }
+}
 
- int librarian_register(user_t *u){
+int librarian_register(user_t *u){
     u->id = get_max_id() + 1;
     u->role = librarian;
 
