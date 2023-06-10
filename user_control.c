@@ -66,3 +66,16 @@ void signup(){
         printf("Failed to register new user..!!\n");
     }
 }
+
+void change_password(int id){
+
+    char new_passwd[PASSWD_SIZE];
+    printf("Please enter your new password : ");
+    scanf("%[^\n]", new_passwd);
+    if(update_password(id, new_passwd) == 1){
+        printf("Password changed successfully..!!\n");
+    }
+    else{
+        printf("Error while changing password.\n");
+    }
+}

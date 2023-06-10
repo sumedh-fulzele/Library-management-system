@@ -9,5 +9,6 @@ void user_accept(user_t *u);
 void user_print(user_t *u);
 void signin();
 void signup();
+void change_password(int id);
 
 #endif
