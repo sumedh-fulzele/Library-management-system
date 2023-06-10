@@ -41,7 +41,6 @@ int owner_register(user_t *u){
 
 }
 
-
 int member_register(user_t *u){
     user_t new_member;
     u->id = get_max_id() + 1;
@@ -72,17 +71,51 @@ int librarian_register(user_t *u){
     }
  }
 
-int update_password(int id, char *new_passwd){
+int update_password(int id, char new_passwd[PASSWD_SIZE]){
+    int flag_update = 0;
+    user_t u_temp;
+
+    if(user_find_by_id(id, &u_temp) == 1){
+        
+        strcpy(u_temp.password, new_passwd);
+        
+        if(user_update(&u_temp) == 1){
+            flag_update = 1;
+        }
+        else{
+            flag_update = 0;
+        }
+    }
+
+    if(!flag_update){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
+int update_profile(int id, char new_email[EMAIL_SIZE], char new_phone[PHONE_SIZE]){
+    int flag_update = 0;
     user_t u_temp;
 
     if(user_find_by_id(id, &u_temp) == 1){
 
-        strcpy(u_temp.password, new_passwd);
+        strcpy(u_temp.email, new_email);
+        strcpy(u_temp.phone, new_phone);
+        
         if(user_update(&u_temp) == 1){
-            return 1;
+            flag_update = 1;
         }
         else{
-            return 0;
+            flag_update = 0;
         }
-    }   
+    }
+
+    if(!flag_update){
+        return 0;
+    }
+    else{
+        return 1;
+    }
 }

@@ -10,5 +10,6 @@ void user_print(user_t *u);
 void signin();
 void signup();
 void change_password(int id);
+void edit_profile(int id);
 
 #endif

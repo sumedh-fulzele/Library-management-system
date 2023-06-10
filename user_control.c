@@ -70,7 +70,7 @@ void signup(){
 void change_password(int id){
 
     char new_passwd[PASSWD_SIZE];
-    printf("Please enter your new password : ");
+    printf("Please enter new password : ");
     scanf("%[^\n]", new_passwd);
     if(update_password(id, new_passwd) == 1){
         printf("Password changed successfully..!!\n");
@@ -78,4 +78,23 @@ void change_password(int id){
     else{
         printf("Error while changing password.\n");
     }
+}
+
+void edit_profile(int id){
+    char new_email[EMAIL_SIZE];
+    char new_phone[PHONE_SIZE];
+
+    printf("Enter new details.\n");
+    printf("New email address : ");
+    scanf("%[^\n]", new_email);
+    printf("Enter new phone number : ");
+    scanf("%*c%[^\n]",new_phone);
+
+    if(update_profile(id, new_email, new_phone) == 1){
+        printf("Profile updated successfully..!!\n");
+    }
+    else{
+        printf("Error while updating profile.\n");
+    }
+
 }
