@@ -49,3 +49,20 @@ LOGIN_PROMPT:
     }
 }
 
+void signup(){
+    user_t new_member;
+
+    printf("Please enter the details.\n");
+    user_accept(&new_member);
+    
+    int flag = member_register(&new_member);
+    if(flag == 1){
+        printf("New member successfully registered..!!\n");
+    }
+    else if(flag == 2){
+        printf("Email is already registered with different account. Please use different email address.\n");
+    }
+    else{
+        printf("Failed to register new user..!!\n");
+    }
+}
