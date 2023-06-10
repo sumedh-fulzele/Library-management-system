@@ -5,6 +5,8 @@
 
 #include"user.h"
 
-void accept_user(user_t *u);
+void user_accept(user_t *u);
+void user_print(user_t *u);
+void signin();
 
 #endif

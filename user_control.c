@@ -4,18 +4,18 @@
 #include<string.h>
 #include"user_control.h"
 #include"user_service.h"
-#include"user_dal.h"
 
-void accept_user(user_t *u){
+void user_accept(user_t *u){
 
     printf("\n Enter the Name : ");
-    scanf("%*c%[^\n]", u->name);
+    scanf("%[^\n]", u->name);
     printf("\nEnter Email address : ");
     scanf("%*c%[^\n]", u->email);
     printf("\nEnter password : ");
     scanf("%*c%[^\n]", u->password);
     printf("\nEnter phone no. : ");
     scanf("%*c%[^\n]", u->phone);
+    scanf("%*c");   //removes "\n" from input buffer
 }
 
 void user_print(user_t *u){
@@ -25,28 +25,27 @@ void user_print(user_t *u){
     printf("Phone : %s\n",u->phone);
 }
 
-void edit_profile(){
+void signin(){
+    user_t u;
     
-    user_t *u;
-    char *email;
-    char *phone;
-    
-    printf("Enter new email address : ");
-    scanf("%[^\n]", email);
-    printf("Enter new phone number : ");
-    scanf("%*c%[^\n]", phone);
-    
-    printf("email is %s", email);
-    printf("phone is %s", phone);
-    
-    
-    strcpy(u->email, email);
-    strcpy(u->phone, phone);
+    char email[EMAIL_SIZE];
+    char password[PASSWD_SIZE];
 
-    if(user_save(u) == 1){
-        printf("Profile edited successfully..!!\n");
+LOGIN_PROMPT:
+
+    printf("Enter login credentials.\n");
+    printf("Email\t: ");
+    scanf("%[^\n]", email);
+    printf("Password\t:");
+    scanf("%*c%[^\n]", password);
+    scanf("%*c");   //this removes \n from input buffer for re taking login credentials after failed user authentication.  
+    
+    if(user_authenticate(email, password, &u) == 1){
+        printf("User logged in successfully....!");
     }
     else{
-        printf("Failed to edit profile..!!\n");
+        printf("Incorrect email or password.");
+        goto LOGIN_PROMPT;
     }
 }
+
