@@ -7,7 +7,7 @@
 
 void user_accept(user_t *u);
 void user_print(user_t *u);
-void signin(int *id);
+void signin(int *user_id);
 void signup();
 void change_password(int id);
 void edit_profile(int id);
