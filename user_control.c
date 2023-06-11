@@ -25,7 +25,7 @@ void user_print(user_t *u){
     printf("Phone : %s\n",u->phone);
 }
 
-void signin(){
+void signin(int *id){
     user_t u;
     
     char email[EMAIL_SIZE];
@@ -41,6 +41,8 @@ LOGIN_PROMPT:
     scanf("%*c");   //this removes \n from input buffer for re taking login credentials after failed user authentication.  
     
     if(user_authenticate(email, password, &u) == 1){
+        id = u.id;
+
         printf("User logged in successfully....!");
     }
     else{
@@ -98,3 +100,4 @@ void edit_profile(int id){
     }
 
 }
+
