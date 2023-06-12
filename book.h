@@ -1,12 +1,12 @@
 #ifndef __BOOK_H
 #define __BOOK_H
 
-#define BOOK_FILE "books.db"
+#define BOOK_FILE "book.db"
 #define BOOK_COPY_FILE "books_copy.db"
-#define BOOK_ISBN_SIZE 14
-#define BOOK_TITLE_SIZE 100
+#define BOOK_ISBN_SIZE 13
+#define BOOK_TITLE_SIZE 70
 #define BOOK_AUTHOR_SIZE 40
-#define BOOK_CATEGORY_SIZE 20
+#define BOOK_CATEGORY_SIZE 21
 #define RECSIZE_BOOK sizeof(book_t)
 #define RECSIZE_BOOK_COPY sizeof(book_copy_t)
 
