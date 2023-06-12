@@ -92,3 +92,82 @@ int book_update(book_t *b){
         return 1;
     }
 }
+
+int book_copy_save(book_copy_t *bc){
+    FILE *fbc;
+
+    fbc = fopen(BOOK_COPY_FILE,"ab");
+    if(fbc == NULL){
+        return 0;
+    }
+
+    size_t copywritten = fwrite(bc, RECSIZE_BOOK_COPY, 1, fbc);
+
+    fclose(fbc);
+    if(!copywritten){
+        return 0;
+    }
+    else{
+        return 1;
+    }   
+}
+
+int book_copy_update(int *book_copy_id, book_copy_t *bc){
+    
+    book_copy_t book_copy_buff;
+    
+    int updated = 0;    //flag
+
+    FILE *fbc;
+    fbc = fopen(BOOK_COPY_FILE, "rb+");
+    if(fbc == NULL){
+        return 0;
+    }
+
+    while( fread(&book_copy_buff, RECSIZE_BOOK_COPY , 1, fbc) > 0 ) {
+        
+        // if isbn is matching or not
+        if(*book_copy_id == book_copy_buff.book_copy_id){
+            
+            //copies data to the respective fields.
+            strcpy(book_copy_buff.isbn, bc->isbn);
+            book_copy_buff.rack = bc->book_copy_id;            
+            book_copy_buff.status = bc->status;
+
+            fseek(fbc, -RECSIZE_BOOK_COPY, SEEK_CUR);  // move file fpos to one record back
+            fwrite(&book_copy_buff, RECSIZE_BOOK_COPY, 1, fbc);    // update changes into the file
+            
+            updated = 1;
+            break;
+        }
+    }
+    fclose(fbc);
+
+    if(!updated){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
+int book_copy_get_available_count(char isbn[BOOK_ISBN_SIZE]){
+    book_copy_t book_copy_buff;
+    FILE *fbc;
+    int count = 0;
+
+    fbc = fopen(BOOK_COPY_FILE, "rb");
+    if(fbc == NULL){
+        return -1;      //error while opening file.
+    }
+
+    while(fread(&book_copy_buff, RECSIZE_BOOK_COPY, 1, fbc) > 0){
+        if(strcmp(isbn, book_copy_buff.isbn) == 0){
+            count++;
+        }
+    }
+
+    fclose(fbc);
+
+    return count;
+}
