@@ -4,11 +4,11 @@
 #include<string.h>
 #include"user.h"
 
-//saves structure u in USERS_FILE
+//saves structure u in USER_FILE
 int user_save(user_t *u){
     FILE *fu;
     
-    fu = fopen(USERS_FILE, "ab");
+    fu = fopen(USER_FILE, "ab");
     if(fu == NULL){
         return 0;
     }
@@ -16,7 +16,7 @@ int user_save(user_t *u){
     size_t recordwritten = fwrite(u, RECSIZE_USER, 1,fu);
     fclose(fu);
     
-    // This check if record is written successfully or not in the USERS_FILE 
+    // This check if record is written successfully or not in the USER_FILE 
     if(recordwritten != 1){
         return 0; //failure
     }
@@ -25,13 +25,12 @@ int user_save(user_t *u){
     }
 }
 
-
 // finds user by email in USER_FILE and saves record in *u
 int user_find_by_email(char *email, user_t *u){
     int found = 0;  //flag
     FILE *fu;
     
-    fu = fopen(USERS_FILE, "rb");
+    fu = fopen(USER_FILE, "rb");
     if(fu == NULL){
         return 0;
     }
@@ -53,12 +52,12 @@ int user_find_by_email(char *email, user_t *u){
     }
 }
 
-// finds user by email in USER_FILE and saves record in *u
+// finds user by id in USER_FILE and saves record in *u
 int user_find_by_id(int id, user_t *u){
     int found = 0;  //flag
     FILE *fu;
     
-    fu = fopen(USERS_FILE, "rb");
+    fu = fopen(USER_FILE, "rb");
     if(fu == NULL){
         return 0;
     }
@@ -88,7 +87,7 @@ int user_update(user_t *u){
     int updated = 0;    //flag
 
     FILE *fu;
-    fu = fopen(USERS_FILE, "rb+");
+    fu = fopen(USER_FILE, "rb+");
     if(fu == NULL){
         return 0;
     }
@@ -123,7 +122,7 @@ int user_update(user_t *u){
 int get_max_id(){
     user_t user_buff;
     FILE *fu;
-    fu = fopen(USERS_FILE,"rb");
+    fu = fopen(USER_FILE,"rb");
     if(fu == NULL){
         return 0;
     }

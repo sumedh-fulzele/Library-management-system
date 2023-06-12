@@ -3,7 +3,7 @@
 #ifndef __USER_H
 #define __USER_H
 
-#define USERS_FILE "users.db"
+#define USER_FILE "user.db"
 #define USER_NAME_SIZE 41
 #define EMAIL_SIZE 60
 #define PASSWD_SIZE 40

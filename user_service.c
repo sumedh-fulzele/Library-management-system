@@ -31,7 +31,7 @@ int owner_register(user_t *u){
     u->id = 1;
     u->role = owner;
     
-    remove(USERS_FILE);
+    remove(USER_FILE);
     if(user_save(u) == 1){
         return 1;
     }
