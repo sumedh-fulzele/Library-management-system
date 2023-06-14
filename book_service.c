@@ -57,17 +57,18 @@ int book_copy_add(char isbn[BOOK_ISBN_SIZE], int rack){
     }
 }
 
-int book_copy_change_status(int book_copy_id, book_copy_t *bc){
+int book_copy_change_status(int book_copy_id, int status, book_copy_t *bc){
     int flag_status = 0;
-    if(book_copy_find_by_id(book_copy_id, bc) == 1){
-        bc->status = 1;
-        if(book_copy_save(bc) == 1){
-            flag_status = 1;
-        }
+    bc->id = book_copy_id;
+    bc->status = status;
+    
+    if(book_copy_update(bc) == 1){
+        flag_status = 1;
     }
     else{
         flag_status = 0;
     }
+
     if(!flag_status){
         return 0;
     }
