@@ -33,8 +33,10 @@ int book_edit(book_t *b){  // *b contains new values
 }
 
 int book_copy_add(char isbn[BOOK_ISBN_SIZE], int rack){
+    
     book_copy_t book_copy_buff;
     int flag_save = 0;
+    
     book_copy_buff.id = get_max_book_copy_id() + 1;
     strcpy(book_copy_buff.isbn,isbn);
     book_copy_buff.rack = rack;
@@ -76,11 +78,12 @@ int book_copy_change_status(int book_copy_id, book_copy_t *bc){
 
 int book_copy_change_rack(int book_copy_id, int rack, book_copy_t *bc){
     int flag_chrack = 0;
-    if(book_copy_find_by_id(book_copy_id, bc) == 1){
-        bc->rack = rack;
-        if(book_copy_save(bc) == 1){
-            flag_chrack = 1;
-        }
+    bc->id = book_copy_id;
+    bc->rack = rack;
+
+    
+    if(book_copy_update(bc) == 1){
+        flag_chrack = 1;
     }
     else{
         flag_chrack = 0;
