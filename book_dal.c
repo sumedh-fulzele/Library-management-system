@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<string.h>
+#include<ctype.h>
 #include"book.h"
+#include"book_control.h"    //  This is here until the DS implementation.
 
 //saves structure u in BOOK_FILE
 int book_save(book_t *b){
@@ -210,4 +212,32 @@ int get_max_book_copy_id(){
     fclose(fbc);
 
     return book_copy_buff.id;
+}
+
+void book_find_by_title(char title[BOOK_TITLE_SIZE]){  //return type will be int in future
+    int flag_found = 0;
+    book_t b;
+    FILE *fb;
+    fb = fopen(BOOK_FILE, "rb");
+    if(fb == NULL){
+        printf("Error opening file..!!");   //will be removed in future
+    }
+
+    // tolower(name);
+
+    while( fread(&b, RECSIZE_BOOK, 1, fb) > 0){
+        // tolower(b.title);
+        if(strstr(b.title, title) != NULL){
+            book_print(&b);                 //will be removed in future
+            printf("\n");                   //will be removed in future
+            flag_found = 1;
+        }
+        
+    }
+
+    fclose(fb);
+
+    if(!flag_found){
+        printf("Book not found..!!");       //will be removed in future
+    }
 }
