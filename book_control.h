@@ -7,5 +7,6 @@ void add_new_book();
 void find_book();
 void edit_book();
 void add_new_book_copy();
+void change_rack();
 
 #endif

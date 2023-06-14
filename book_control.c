@@ -89,3 +89,21 @@ void add_new_book_copy(){
         printf("Failed to add book copy\n");
     }
 }
+
+void change_rack(){
+    book_copy_t bc;
+    int book_copy_id;
+    int rack;
+    
+    printf("\nEnter the ID of Book copy : ");
+    scanf("%d", &book_copy_id);
+    printf("\nEnter the new rack number : ");
+    scanf("%d", &rack);
+    
+    if(book_copy_change_rack(book_copy_id, rack,  &bc) == 1){
+        printf("Rack of book copy with ID %d changed successfully..!!", book_copy_id);
+    }
+    else{
+        printf("Failed to change rack..!!");
+    }
+}
