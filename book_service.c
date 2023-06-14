@@ -35,11 +35,10 @@ int book_edit(book_t *b){  // *b contains new values
 int book_copy_add(char isbn[BOOK_ISBN_SIZE], int rack){
     book_copy_t book_copy_buff;
     int flag_save = 0;
-    book_copy_buff.book_copy_id = get_max_book_copy_id() + 1;
+    book_copy_buff.id = get_max_book_copy_id() + 1;
     strcpy(book_copy_buff.isbn,isbn);
     book_copy_buff.rack = rack;
     book_copy_buff.status = 1;
-    book_copy_save(&book_copy_buff);
 
     if(book_copy_save(&book_copy_buff) == 1){
         flag_save = 1;

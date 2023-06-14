@@ -20,7 +20,7 @@ typedef struct book{
 
 typedef struct book_copy
 {
-    int book_copy_id;
+    int id;
     char isbn[BOOK_ISBN_SIZE];
     int rack;
     int status;
