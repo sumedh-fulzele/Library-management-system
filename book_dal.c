@@ -137,7 +137,7 @@ int book_copy_save(book_copy_t *bc){
     }   
 }
 
-int book_copy_update(int *book_copy_id, book_copy_t *bc){
+int book_copy_update(book_copy_t *bc){
     
     book_copy_t book_copy_buff;
     
@@ -152,11 +152,10 @@ int book_copy_update(int *book_copy_id, book_copy_t *bc){
     while( fread(&book_copy_buff, RECSIZE_BOOK_COPY , 1, fbc) > 0 ) {
         
         // if isbn is matching or not
-        if(*book_copy_id == book_copy_buff.id){
+        if(bc->id == book_copy_buff.id){
             
             //copies data to the respective fields.
-            strcpy(book_copy_buff.isbn, bc->isbn);
-            book_copy_buff.rack = bc->id;            
+            book_copy_buff.rack = bc->rack;            
             book_copy_buff.status = bc->status;
 
             fseek(fbc, -RECSIZE_BOOK_COPY, SEEK_CUR);  // move file fpos to one record back
