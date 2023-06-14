@@ -62,3 +62,30 @@ void edit_book(){
         printf("Failed to edit book..!!");
     }
 }
+
+// void check_book_availability(){
+//     char isbn[BOOK_ISBN_SIZE];
+//     printf("Enter the ISBN of the book which you wish to search : ");
+//     scanf("%[^\n]",isbn);
+
+// }
+
+void book_copy_accept(char isbn[BOOK_ISBN_SIZE], int *rack){
+    printf("\nEnter Book Copy details..");
+    printf("\nEnter the ISBN of the book : ");
+    scanf("%[^\n]", isbn);
+    printf("\nEnter the rack number : ");
+    scanf("%d", rack);
+}
+
+void add_new_book_copy(){
+    char isbn[BOOK_ISBN_SIZE];
+    int rack;
+    book_copy_accept(isbn, &rack);
+    if(book_copy_add(isbn, rack) == 1){
+        printf("Book Copy added in the library..!!\n");
+    }
+    else{
+        printf("Failed to add book copy\n");
+    }
+}
