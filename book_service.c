@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 #include"book.h"
 #include"book_dal.h"
 
@@ -12,21 +13,15 @@ int book_add(book_t *b){
     }
 }
 
-int book_edit(char isbn[BOOK_ISBN_SIZE],book_t *b){  // *b contains new values
+int book_edit(book_t *b){  // *b contains new values
     int flag_update = 0;
-    book_t book_buff;   
 
-    if(book_find_by_isbn(isbn, &book_buff) == 1){   //saves record from book.db to book_buff.
-        //updates respective fields of book_buff with user inputed b*.
-        if(book_update(b) == 1){
-            flag_update = 1;
-        }
-        else{
-            flag_update = 0;
-        }
+    //updates respective fields of book_buff with user inputed b*.
+    if(book_update(b) == 1){
+        flag_update = 1;
     }
     else{
-        return 2;   //book doesn't exist in the library.
+        flag_update = 0;
     }
 
     if(!flag_update){
@@ -35,5 +30,83 @@ int book_edit(char isbn[BOOK_ISBN_SIZE],book_t *b){  // *b contains new values
     else{
         return 1;
     }
-
 }
+
+int book_copy_add(char isbn[BOOK_ISBN_SIZE], int rack){
+    book_copy_t book_copy_buff;
+    int flag_save = 0;
+    book_copy_buff.book_copy_id = get_max_book_copy_id() + 1;
+    strcpy(book_copy_buff.isbn,isbn);
+    book_copy_buff.rack = rack;
+    book_copy_buff.status = 1;
+    book_copy_save(&book_copy_buff);
+
+    if(book_copy_save(&book_copy_buff) == 1){
+        flag_save = 1;
+    }
+    else{
+        flag_save = 0;
+    }
+
+    if(!flag_save){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
+int book_copy_change_status(int book_copy_id, book_copy_t *bc){
+    int flag_status = 0;
+    if(book_copy_find_by_id(book_copy_id, bc) == 1){
+        bc->status = 1;
+        if(book_copy_save(bc) == 1){
+            flag_status = 1;
+        }
+    }
+    else{
+        flag_status = 0;
+    }
+    if(!flag_status){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
+int book_copy_change_rack(int book_copy_id, int rack, book_copy_t *bc){
+    int flag_chrack = 0;
+    if(book_copy_find_by_id(book_copy_id, bc) == 1){
+        bc->rack = rack;
+        if(book_copy_save(bc) == 1){
+            flag_chrack = 1;
+        }
+    }
+    else{
+        flag_chrack = 0;
+    }
+    
+    if(!flag_chrack){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
+int book_search_by_isbn(char isbn[BOOK_ISBN_SIZE], book_t *b){
+    if(book_find_by_isbn(isbn, b) == 1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+
+// int book_copy_available_id(char isbn[BOOK_ISBN_SIZE]){
+//     int book_copy_count = book_copy_get_available_count(isbn);
+
+// }
+

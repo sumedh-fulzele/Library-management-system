@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include"book.h"
+#include"book_service.h"
+
+void book_accept(book_t *b){
+    printf("\nEnter the book details.");
+    printf("\nTitle :");
+    scanf("%[^\n]", b->title );
+    printf("Author : ");
+    scanf("%*c%[^\n]", b->author );
+    printf("ISBN : ");
+    scanf("%*c%[^\n]", b->isbn);
+    printf("Category : ");
+    scanf("%*c%[^\n]", b->category);
+    scanf("%*c");
+    printf("Price : ");
+    scanf("%f", &b->price);
+}
+
+void book_print(book_t *b){
+    printf("\nTitle : %s", b->title);
+    printf("\nAuthor : %s", b->author);
+    printf("\nISBN : %s", b->isbn);
+    printf("\nCategory : %s", b->category);
+    printf("\nPrice : %f", b->price);
+}
+
+void add_new_book(){
+    book_t b;
+    book_accept(&b);
+    int flag_add = book_add(&b);
+    if( flag_add == 1){
+        printf("Book is successfully added..!!");
+    }
+    else{
+        printf("Failed to add book");
+    }
+}
+
+void find_book(){
+    book_t  b;
+    char isbn[BOOK_ISBN_SIZE];
+    printf("Enter the ISBN of the book which you wish to search : ");
+    scanf("%[^\n]",isbn);
+    if(book_search_by_isbn(isbn, &b) == 1){
+        printf("\nBook Found..!!\n");
+        book_print(&b);
+    }
+    else{
+        printf("\nBook Not Found..!!");
+    }
+}
+
+void edit_book(){
+    book_t b;
+    printf("Enter new details of the book except ISBN :");
+    book_accept(&b);
+    if(book_edit(&b) == 1){
+        printf("\nBook updated successfully..!!");
+    }
+    else{
+        printf("Failed to edit book..!!");
+    }
+}
