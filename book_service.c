@@ -59,11 +59,13 @@ int book_copy_add(char isbn[BOOK_ISBN_SIZE], int rack){
 
 int book_copy_change_status(int book_copy_id, int status, book_copy_t *bc){
     int flag_status = 0;
-    bc->id = book_copy_id;
-    bc->status = status;
     
-    if(book_copy_update(bc) == 1){
-        flag_status = 1;
+    if(book_copy_find_by_id(book_copy_id, bc) == 1){
+        bc->status = status;
+        
+        if(book_copy_update(bc) == 1){
+            flag_status = 1;
+        }    
     }
     else{
         flag_status = 0;
@@ -106,10 +108,3 @@ int book_search_by_isbn(char isbn[BOOK_ISBN_SIZE], book_t *b){
         return 0;
     }
 }
-
-
-// int book_copy_available_id(char isbn[BOOK_ISBN_SIZE]){
-//     int book_copy_count = book_copy_get_available_count(isbn);
-
-// }
-
