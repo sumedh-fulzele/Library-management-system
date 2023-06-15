@@ -71,7 +71,6 @@ int book_update(book_t *b){
         if(strcmp(b->isbn, book_buff.isbn) == 0){
             
             //copies data to the respective fields.
-            strcpy(book_buff.isbn, b->isbn);
             strcpy(book_buff.title, b->title);
             strcpy(book_buff.author, b->author);
             strcpy(book_buff.category, b->category);
@@ -177,25 +176,28 @@ int book_copy_update(book_copy_t *bc){
     }
 }
 
-int book_copy_get_available_count(char isbn[BOOK_ISBN_SIZE]){
+int book_copy_get_count(char isbn[BOOK_ISBN_SIZE], int *total_count, int *avail_count){
     book_copy_t book_copy_buff;
     FILE *fbc;
-    int count = 0;
 
     fbc = fopen(BOOK_COPY_FILE, "rb");
     if(fbc == NULL){
-        return -1;      //error while opening file.
+        return 0;      //error while opening file.
     }
 
     while(fread(&book_copy_buff, RECSIZE_BOOK_COPY, 1, fbc) > 0){
-        if(strcmp(isbn, book_copy_buff.isbn) == 0 && book_copy_buff.status == 1){
-            count++;
+        printf("%s", book_copy_buff.isbn);
+        if(strcmp(isbn, book_copy_buff.isbn) == 0){
+            (*total_count)++;
+            if(book_copy_buff.status == 1){
+                (*avail_count)++;
+            }
         }
     }
 
     fclose(fbc);
 
-    return count;
+    return 1;
 }
 
 int get_max_book_copy_id(){

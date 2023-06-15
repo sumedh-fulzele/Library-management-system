@@ -10,7 +10,7 @@ void book_find_by_title(char title[BOOK_TITLE_SIZE]);
 int book_copy_find_by_id(int id, book_copy_t *bc);
 int book_copy_save(book_copy_t *bc);
 int book_copy_update(book_copy_t *bc);
-int book_copy_get_available_count(char isbn[BOOK_ISBN_SIZE]);
+int book_copy_get_count(char isbn[BOOK_ISBN_SIZE],  int *total_count, int *avail_count);
 int get_max_book_copy_id();
 
 #endif
