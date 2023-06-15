@@ -1,57 +1,53 @@
 #include <stdio.h>
 #include <time.h>
+#include"date.h"
 
-int isLeapYear(int year) {
+//date should be adjusted like below.
+// year - 1900
+// month (0 - 11)
+// day of the month (1 - 31)
+
+
+int date_diff(date_t date1, date_t date2, int *diff_in_days ){
+    
+    time_t time1 = mktime(&date1);
+    time_t time2 = mktime(&date2);
+
+    double diff_in_seconds = difftime(time1, time2);
+    diff_in_days = (int)(diff_in_seconds / (24 * 3600));
+
+    return 1;
+}
+
+void adddays(date_t i_date, int days_to_add,date_t *d_date ) {
+    i_date.tm_mday += days_to_add;
+
+    while (i_date.tm_mday > days_in_month(i_date.tm_mon, i_date.tm_year)) {
+        i_date.tm_mday -= days_in_month(i_date.tm_mon, i_date.tm_year);
+        i_date.tm_mon++;
+
+        if (i_date.tm_mon > 11) {
+            i_date.tm_mon = 0;
+            i_date.tm_year++;
+        }
+    }
+    d_date->tm_year = i_date.tm_year;
+    d_date->tm_mon  = i_date.tm_mon;
+    d_date->tm_mday = i_date.tm_mday;
+}
+
+int is_leap_year(int year) {
     if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
         return 1;
     return 0;
 }
 
-int getDaysInMonth(int month, int year) {
+int days_in_month(int month, int year) {
     const int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int days = daysInMonth[month];
 
-    if (month == 1 && isLeapYear(year))
+    if (month == 1 && is_leap_year(year))
         days++;
 
     return days;
-}
-
-int main() {
-    struct tm date1 = {0};
-    struct tm date2 = {0};
-
-    date1.tm_year = 123; // year - 1900
-    date1.tm_mon = 4;    // month (0 - 11)
-    date1.tm_mday = 15;  // day of the month (1 - 31)
-
-    date2.tm_year = 122; // year - 1900
-    date2.tm_mon = 3;    // month (0 - 11)
-    date2.tm_mday = 10;  // day of the month (1 - 31)
-
-    time_t time1 = mktime(&date1);
-    time_t time2 = mktime(&date2);
-
-    double differenceInSeconds = difftime(time1, time2);
-    int differenceInDays = (int)(differenceInSeconds / (24 * 3600));
-
-    int years = date1.tm_year - date2.tm_year;
-    int months = date1.tm_mon - date2.tm_mon;
-    int days = date1.tm_mday - date2.tm_mday;
-
-    if (days < 0) {
-        months--;
-        days += getDaysInMonth(date2.tm_mon, date2.tm_year);
-    }
-
-    if (months < 0) {
-        years--;
-        months += 12;
-    }
-
-    printf("Difference: %d years, %d months, %d days\n", years, months, days);
-    printf("Difference in seconds: %.0f\n", differenceInSeconds);
-    printf("Difference in days: %d\n", differenceInDays);
-
-    return 0;
 }
