@@ -8,5 +8,5 @@ void find_book();
 void edit_book();
 void add_new_book_copy();
 void change_rack();
-
+void check_book_availability();
 #endif

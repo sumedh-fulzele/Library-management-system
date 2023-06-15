@@ -64,9 +64,7 @@ void edit_book(){
 }
 
 // void check_book_availability(){
-//     char isbn[BOOK_ISBN_SIZE];
-//     printf("Enter the ISBN of the book which you wish to search : ");
-//     scanf("%[^\n]",isbn);
+    
 
 // }
 
@@ -105,5 +103,17 @@ void change_rack(){
     }
     else{
         printf("Failed to change rack..!!");
+    }
+}
+
+void check_book_availability(){
+    char isbn[BOOK_ISBN_SIZE] = {0};
+    printf("\nEnter the ISBN of the book : ");
+    scanf("%s", isbn);
+    if(book_copy_available(isbn) == 1){
+        printf("\nBook is available..!");
+    }
+    else{
+        printf("\nBook is unavailable..!!");
     }
 }
