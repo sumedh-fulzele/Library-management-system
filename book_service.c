@@ -108,3 +108,14 @@ int book_search_by_isbn(char isbn[BOOK_ISBN_SIZE], book_t *b){
         return 0;
     }
 }
+
+int book_copy_available(char isbn[BOOK_ISBN_SIZE]){
+    int total_count = 0;
+    int avail_count = 0;
+    if(book_copy_get_count(isbn, &total_count, &avail_count) == 1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
