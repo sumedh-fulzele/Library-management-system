@@ -8,15 +8,15 @@
 // day of the month (1 - 31)
 
 
-int date_diff(date_t date1, date_t date2, int *diff_in_days ){
+int date_diff(date_t date1, date_t date2 ){
     
     time_t time1 = mktime(&date1);
     time_t time2 = mktime(&date2);
 
     double diff_in_seconds = difftime(time1, time2);
-    diff_in_days = (int)(diff_in_seconds / (24 * 3600));
+    int diff_in_days = (int)(diff_in_seconds / (24 * 3600));
 
-    return 1;
+    return diff_in_days;
 }
 
 void adddays(date_t i_date, int days_to_add,date_t *d_date ) {
