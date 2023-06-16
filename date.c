@@ -9,6 +9,24 @@ date_t date1, date2;
 // year - 1900
 // month (0 - 11)
 // day of the month (1 - 31)
+
+int is_leap_year(int year) {
+    year += 1900;
+    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+        return 1;
+    return 0;
+}
+
+int days_in_month(int month, int year) {
+    const int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int days = daysInMonth[month];
+
+    if (month == 1 && is_leap_year(year))
+        days++;
+
+    return days;
+}
+
 void convert(date_t *date, struct tm *d){
     d->tm_year = date->year -1900;
     d->tm_mon = date->month - 1;
@@ -54,26 +72,15 @@ void adddays(date_t i_date, int days_to_add, date_t *d_date ) {
 
 }
 
-int is_leap_year(int year) {
-    year += 1900;
-    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
-        return 1;
-    return 0;
-}
-
-int days_in_month(int month, int year) {
-    const int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    int days = daysInMonth[month];
-
-    if (month == 1 && is_leap_year(year))
-        days++;
-
-    return days;
-}
-
-void curren_date(date_t *date){
+void current_date(date_t *date){
+    struct tm *d;
     time_t current_time;
     
     current_time = time(NULL);
-    date = localtime(&current_time);
+    d = localtime(&current_time);
+
+    date->year = d->tm_year + 1900;
+    date->month = d->tm_mon + 1;
+    date->day = d->tm_mday;
+
 }
