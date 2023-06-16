@@ -4,6 +4,8 @@
 #include"date.h"
 #include<time.h>
 
+#define ISSUERECORD_FILE "issuerecord.db"
+
 typedef struct issuerecord
 {
     int id;
