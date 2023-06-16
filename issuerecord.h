@@ -5,6 +5,7 @@
 #include<time.h>
 
 #define ISSUERECORD_FILE "issuerecord.db"
+#define RECSIZE_ISSUERECORD sizeof(issuerecord_t)
 
 typedef struct issuerecord
 {
