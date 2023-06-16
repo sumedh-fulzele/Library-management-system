@@ -243,3 +243,31 @@ void book_find_by_title(char title[BOOK_TITLE_SIZE]){  //return type will be int
         printf("Book not found..!!");       //will be removed in future
     }
 }
+
+int book_copy_avail_id(char isbn[BOOK_ISBN_SIZE], book_copy_t *bc){
+    int flag_avail = 0;
+
+    FILE *fbc;
+    fbc = fopen(BOOK_COPY_FILE, "rb");
+    if(fbc == NULL){
+        return -1;      //error opening file.
+    }
+
+    while(fread(bc, RECSIZE_BOOK_COPY, 1, fbc) > 0){
+        if(strcmp(isbn, bc->isbn) == 0){            
+            if(bc->status == 1){
+                flag_avail = 1;
+                break;
+            }
+        }
+    }
+
+    fclose(fbc);
+
+    if(!flag_avail){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}

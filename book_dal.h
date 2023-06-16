@@ -12,5 +12,6 @@ int book_copy_save(book_copy_t *bc);
 int book_copy_update(book_copy_t *bc);
 int book_copy_get_count(char isbn[BOOK_ISBN_SIZE],  int *total_count, int *avail_count);
 int get_max_book_copy_id();
+int book_copy_avail_id(char isbn[BOOK_ISBN_SIZE], book_copy_t *bc);
 
 #endif
