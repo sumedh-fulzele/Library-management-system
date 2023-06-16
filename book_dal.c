@@ -265,9 +265,9 @@ int book_copy_avail_id(char isbn[BOOK_ISBN_SIZE], book_copy_t *bc){
     fclose(fbc);
 
     if(!flag_avail){
-        return 0;
+        return 0;   //book copy isn't available.
     }
     else{
-        return 1;
+        return 1;   //book copy is available.
     }
 }
