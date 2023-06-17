@@ -21,7 +21,7 @@ int issuerecord_save(issuerecord_t *ir){
         return 1;
     }
 }
-//returns -1 if encountered any error
+
 int get_max_issuerecord_id(){
     issuerecord_t issuerecord_buff;
     // int max_id = 0;
@@ -42,5 +42,34 @@ int get_max_issuerecord_id(){
     }
     else{
         return issuerecord_buff.id;  
+    }
+}
+
+int issuerecord_update(issuerecord_t *ir){
+    int flag_update = 0;
+    issuerecord_t ir_buff;
+    
+    FILE *fir;
+    fir = fopen(ISSUERECORD_FILE, "rb+");
+    if(fir = NULL){
+        return 0;       //failed to update issuerecord.
+    }
+
+    while(fread(&ir_buff, RECSIZE_ISSUERECORD, 1, fir) > 0){
+        if(ir_buff.id == ir->id){
+
+            fseek(fir, -RECSIZE_ISSUERECORD, SEEK_CUR);
+            fwrite(ir, RECSIZE_ISSUERECORD, 1, fir);
+            
+            flag_update = 1;
+            break;
+        }
+    }
+
+    if(!flag_update){
+        return 0;
+    }
+    else{
+        return 1;
     }
 }

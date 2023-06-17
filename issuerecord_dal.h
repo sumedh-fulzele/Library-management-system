@@ -5,5 +5,6 @@
 
 int issuerecord_save(issuerecord_t *ir);
 int get_max_issuerecord_id();
+int issuerecord_update(issuerecord_t *ir);
 
 #endif
