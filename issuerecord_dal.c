@@ -73,3 +73,27 @@ int issuerecord_update(issuerecord_t *ir){
         return 1;
     }
 }
+
+int issuerecord_find_by_id(int issuerecord_id, issuerecord_t *ir){
+    int flag_search = 0;
+
+    FILE *fir;
+    fir = fopen(ISSUERECORD_FILE, "rb");
+    if(fir == NULL){
+        return 0;
+    }
+
+    while(fread(ir, RECSIZE_ISSUERECORD, 1, fir) > 0){
+        if(issuerecord_id == ir->id){
+            flag_search = 1;
+            break;
+        }
+    }
+
+    if(!flag_search){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
