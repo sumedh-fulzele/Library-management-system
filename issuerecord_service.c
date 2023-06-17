@@ -47,7 +47,7 @@ int issuerecord_add(char isbn[BOOK_ISBN_SIZE], int member_id, int *issuerecord_i
 
 }
 
-int issuerecord_edit(int issuerecord_id){
+int issuerecord_edit(int issuerecord_id, book_copy_t *bc){
     
     int flag_edit = 0;
     issuerecord_t ir;
@@ -64,7 +64,7 @@ int issuerecord_edit(int issuerecord_id){
             ir.fine_amount = fine_amount;
         }
 
-        if(issuerecord_update(&ir) == 1){
+        if(issuerecord_update(&ir) == 1 && book_copy_change_status(ir.book_copy_id, 1, bc) == 1){
             flag_edit = 1;
         }
     }
