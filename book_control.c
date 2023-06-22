@@ -37,12 +37,26 @@ void add_new_book(){
     }
 }
 
-void find_book(){
+// void find_book(){
+//     book_t  b;
+//     char isbn[BOOK_ISBN_SIZE];
+//     printf("Enter the ISBN of the book which you wish to search : ");
+//     scanf("%[^\n]",isbn);
+//     if(book_search_by_isbn(isbn, &b) == 1){
+//         printf("\nBook Found..!!\n");
+//         book_print(&b);
+//     }
+//     else{
+//         printf("\nBook Not Found..!!");
+//     }
+// }
+
+void find_book_by_title(){
     book_t  b;
-    char isbn[BOOK_ISBN_SIZE];
-    printf("Enter the ISBN of the book which you wish to search : ");
-    scanf("%[^\n]",isbn);
-    if(book_search_by_isbn(isbn, &b) == 1){
+    char title[BOOK_TITLE_SIZE];
+    printf("Enter the title of the book : ");
+    scanf("%[^\n]",title);
+    if(book_search_by_title(title) == 1){
         printf("\nBook Found..!!\n");
         book_print(&b);
     }
