@@ -3,6 +3,7 @@
 #include"issuerecord.h"
 #include"date.h"
 #include"issuerecord_service.h"
+#include"issuerecord_dal.h"
 
 void issue_copy(){
     int member_id;
@@ -41,4 +42,24 @@ void return_copy(){
     else{
         printf("Failed to process your request..!!");
     }
+}
+
+void print_issuerecord(){
+    int issuerecord_id;
+    issuerecord_t ir;
+
+    printf("\nEnter the issue record id : ");
+    scanf("%d", &issuerecord_id);
+
+    if(issuerecord_find_by_id(issuerecord_id, &ir) == 1){
+        printf("\n Issuer Record details are as follows :");
+        printf("\nId : %d\nBook ID : %d\nMember ID: %d\nFine Amount : %d", ir.id, ir.book_copy_id, ir.member_id, ir.fine_amount);
+        printf("\nIssue Date : %02d/%02d/%d", ir.issue_date.day, ir.issue_date.month, ir.issue_date.year);
+        printf("\nReturn Due Date : %02d/%02d/%d", ir.return_due_date.day, ir.return_due_date.month, ir.return_due_date. year);
+        printf("\nReturn Date : %02d/%02d/%d", ir.return_date.day, ir.return_date.month, ir.return_date.year);
+    }
+    else{
+        printf("No Issue record found with this ID");
+    }
+
 }

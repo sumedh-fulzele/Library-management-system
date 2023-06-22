@@ -3,5 +3,6 @@
 
 void issue_copy();
 void return_copy();
+void print_issuerecord();
 
 #endif
