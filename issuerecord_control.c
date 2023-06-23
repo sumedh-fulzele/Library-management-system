@@ -31,16 +31,19 @@ void issue_copy(){
 
 void return_copy(){
     int issuerecord_id;
+    float amount;
     book_copy_t bc;
 
     printf("\nEnter the issuerecord ID");
     scanf("%d", &issuerecord_id);
 
-    if(issuerecord_edit(issuerecord_id, &bc) == 1){
-        printf("Issued book copy with %d has been returned", bc.id);
+    if(issuerecord_edit(issuerecord_id, &bc, &amount) == 1){
+        printf("\nFine amount : %.2f", &amount);
+        printf("Payment done successfully..!!");
+        printf("\nIssued book copy with %d has been returned.", bc.id);
     }
     else{
-        printf("Failed to process your request..!!");
+        printf("\nFailed to process your request..!!");
     }
 }
 
