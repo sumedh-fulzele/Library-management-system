@@ -13,7 +13,7 @@ typedef struct payment{
     int id;
     int member_id;
     float amount;
-    enum payment_type pt;
+    enum payment_type type;
     date_t transaction_time;
     date_t nextpayment_duedate;
 }payment_t;

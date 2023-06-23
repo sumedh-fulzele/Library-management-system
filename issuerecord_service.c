@@ -6,6 +6,7 @@
 #include"book_dal.h"
 #include"book_service.h"
 #include"date.h"
+#include"payment_service.h"
 
 //This function add new issuerecord in ISSUERECORD_FILE. This returns "1" if issuerecord saved successfully, returns "0" if book not found and returns "-1" if got error while saving record.
 int issuerecord_add(char isbn[BOOK_ISBN_SIZE], int member_id, int *issuerecord_id){
@@ -47,7 +48,7 @@ int issuerecord_add(char isbn[BOOK_ISBN_SIZE], int member_id, int *issuerecord_i
 
 }
 
-int issuerecord_edit(int issuerecord_id, book_copy_t *bc){
+int issuerecord_edit(int issuerecord_id, book_copy_t *bc, float *amount){
     
     int flag_edit = 0;
     issuerecord_t ir;
@@ -58,13 +59,14 @@ int issuerecord_edit(int issuerecord_id, book_copy_t *bc){
         
         int fine_amount = (date_diff(ir.return_date, ir.return_due_date) * 5);
         if(fine_amount < 0){
-            ir.fine_amount = 0;
+            ir.fine_amount = *amount = 0;
         }
         else{
-            ir.fine_amount = fine_amount;
+            ir.fine_amount = *amount = fine_amount;
+
         }
 
-        if(issuerecord_update(&ir) == 1 && book_copy_change_status(ir.book_copy_id, 1, bc) == 1){
+        if(issuerecord_update(&ir) == 1 && book_copy_change_status(ir.book_copy_id, 1, bc) == 1 && payment_add_fine(ir.fine_amount, ir.member_id) == 1){
             flag_edit = 1;
         }
     }
