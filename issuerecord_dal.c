@@ -51,7 +51,7 @@ int issuerecord_update(issuerecord_t *ir){
     
     FILE *fir;
     fir = fopen(ISSUERECORD_FILE, "rb+");
-    if(fir = NULL){
+    if(fir == NULL){
         return 0;       //failed to update issuerecord.
     }
 
@@ -97,3 +97,4 @@ int issuerecord_find_by_id(int issuerecord_id, issuerecord_t *ir){
         return 1;
     }
 }
+
