@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<string.h>
 #include"user.h"
+#include"date.h"
 
 //saves structure u in USER_FILE
 int user_save(user_t *u){
@@ -101,6 +102,7 @@ int user_update(user_t *u){
             strcpy(user_buff.email, u->email);
             strcpy(user_buff.phone, u->phone);
             strcpy(user_buff.password, u->password);
+            user_buff.next_due_date = u->next_due_date;
           
             fseek(fu, -RECSIZE_USER, SEEK_CUR);  // move file fpos to one record back
             fwrite(&user_buff, RECSIZE_USER, 1, fu);    // update changes into the file

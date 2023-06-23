@@ -23,6 +23,7 @@ void user_print(user_t *u){
     printf("Name : %s\n",u->name);
     printf("Email address : %s\n",u->email);
     printf("Phone : %s\n",u->phone);
+    printf("Your next monthly payment due date : %02d/%02d/%d\n", u->next_due_date.day, u->next_due_date.month, u->next_due_date.year);
 }
 
 void signin(int *user_id){
@@ -97,5 +98,4 @@ void edit_profile(int id){
     else{
         printf("Error while updating profile.\n");
     }
-
 }
