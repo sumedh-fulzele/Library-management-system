@@ -3,6 +3,8 @@
 #ifndef __USER_H
 #define __USER_H
 
+#include "date.h"
+
 #define USER_FILE "user.db"
 #define USER_NAME_SIZE 41
 #define EMAIL_SIZE 60
@@ -20,6 +22,7 @@ typedef struct user
     char password[PASSWD_SIZE];
     char phone[PHONE_SIZE];
     enum rol role;      //O - owner ,L - librarian, M - member
+    date_t next_due_date;   //due date for next monthly fees.
 }user_t;
 
 #endif
