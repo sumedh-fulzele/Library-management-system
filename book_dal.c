@@ -225,10 +225,10 @@ void book_find_by_title(char title[BOOK_TITLE_SIZE]){  //return type will be int
         printf("Error opening file..!!");   //will be removed in future
     }
 
-    // tolower(name);
+    tolower(title);
 
     while( fread(&b, RECSIZE_BOOK, 1, fb) > 0){
-        // tolower(b.title);
+        tolower(b.title);
         if(strstr(b.title, title) != NULL){
             book_print(&b);                 //will be removed in future
             printf("\n");                   //will be removed in future
