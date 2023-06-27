@@ -19,14 +19,18 @@ void issue_copy(){
     int flag_issued = issuerecord_add(isbn, member_id, &issuerecord_id);
 
     if(flag_issued == 1){
-        printf("Book issued successfully.\n Your Issue ID is %d..!!", issuerecord_id);
+        printf("\nBook issued successfully.\n Your Issue ID is %d..!!", issuerecord_id);
     }
     else if(flag_issued == 0){
-        printf("Book copy isn't available..!!");
+        printf("\nBook copy isn't available..!!");
     }
-    else if(flag_issued == 0){
-        printf("Error while saving issuerecord..!!");
+    else if(flag_issued == -2){
+        printf("\nMember is not subscribed member");
     }
+    else if(flag_issued == -1){
+        printf("\nError while saving issuerecord..!!");
+    }
+    
 }
 
 void return_copy(){
@@ -38,7 +42,7 @@ void return_copy(){
     scanf("%d", &issuerecord_id);
 
     if(issuerecord_edit(issuerecord_id, &bc, &amount) == 1){
-        printf("\nFine amount : %.2f", &amount);
+        printf("\nFine amount : %.2f", amount);
         printf("Payment done successfully..!!");
         printf("\nIssued book copy with %d has been returned.", bc.id);
     }
