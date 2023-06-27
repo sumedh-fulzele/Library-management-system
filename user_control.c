@@ -23,7 +23,7 @@ void user_print(user_t *u){
     printf("Name : %s\n",u->name);
     printf("Email address : %s\n",u->email);
     printf("Phone : %s\n",u->phone);
-    printf("Your next monthly payment due date : %02d/%02d/%d\n", u->next_due_date.day, u->next_due_date.month, u->next_due_date.year);
+    printf("Your next monthly payment due date : %02d/%02d/%d\n", u->nextpayment_duedate.day, u->nextpayment_duedate.month, u->nextpayment_duedate.year);
 }
 
 void signin(int *user_id){
@@ -97,5 +97,23 @@ void edit_profile(int id){
     }
     else{
         printf("Error while updating profile.\n");
+    }
+}
+
+void appoint_librarian(){
+    user_t new_librarian;
+
+    printf("\nPlease enter the details.\n");
+    user_accept(&new_librarian);
+    
+    int flag = librarian_register(&new_librarian);
+    if(flag == 1){
+        printf("New Librarian added...!!\n");
+    }
+    else if(flag == 2){
+        printf("Email is already registered with different account. Please use different email address.\n");
+    }
+    else{
+        printf("Failed to register new librarian..!!\n");
     }
 }
