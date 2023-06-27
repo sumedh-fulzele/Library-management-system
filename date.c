@@ -34,9 +34,13 @@ void convert(date_t *date, struct tm *d){
 }
 
 
-int date_diff(date_t date1, date_t date2 ){
+int date_diff(date_t date1, date_t date2 ){ //date 1 is final date and date 2 is initial date.
     
-    struct tm d1, d2;
+    struct tm d1 = {0};
+    struct tm d2 = {0};
+
+    printf("%02d-%02d-%d" , date1.day, date1.month, date1.year);
+
     convert(&date1, &d1);
     convert(&date2, &d2);
 
@@ -45,6 +49,8 @@ int date_diff(date_t date1, date_t date2 ){
 
     double diff_in_seconds = difftime(time1, time2);
     int diff_in_days = (int)(diff_in_seconds / (24 * 3600));
+    // printf("check %d", diff_in_days);
+
 
     return diff_in_days;
 }
@@ -73,14 +79,39 @@ void adddays(date_t i_date, int days_to_add, date_t *d_date ) {
 }
 
 void current_date(date_t *date){
-    struct tm *d;
+    struct tm d;
     time_t current_time;
     
     current_time = time(NULL);
-    d = localtime(&current_time);
+    d = *localtime(&current_time);
 
-    date->year = d->tm_year + 1900;
-    date->month = d->tm_mon + 1;
-    date->day = d->tm_mday;
+    date->year = d.tm_year + 1900;
+    date->month = d.tm_mon + 1;
+    date->day = d.tm_mday;
 
+}
+
+int datecmp(date_t final, date_t init){
+    
+    int flag_greater = 0;
+    if (final.year == init.year){
+        if (final.month == init.month){
+            if(final.day >= init.day ){
+                flag_greater = 1;
+            }
+        }
+        else if(final.month > init.month){
+            flag_greater = 1;
+        }
+    }
+    else if(final.year > init.year){
+        flag_greater = 1;
+    }    
+    
+    if(flag_greater == 1){
+        return 1;
+    }
+    else if(flag_greater == 0){
+        return 0;
+    }
 }
