@@ -4,7 +4,7 @@
 #define BOOK_FILE "book.db"
 #define BOOK_COPY_FILE "books_copy.db"
 #define BOOK_ISBN_SIZE 16
-#define BOOK_TITLE_SIZE 60
+#define BOOK_TITLE_SIZE 100
 #define BOOK_AUTHOR_SIZE 40
 #define BOOK_CATEGORY_SIZE 40
 #define RECSIZE_BOOK sizeof(book_t)
