@@ -22,7 +22,7 @@ typedef struct user
     char password[PASSWD_SIZE];
     char phone[PHONE_SIZE];
     enum rol role;      //O - owner ,L - librarian, M - member
-    date_t next_due_date;   //due date for next monthly fees.
+    date_t nextpayment_duedate;   //due date for next monthly fees.
 }user_t;
 
 #endif
