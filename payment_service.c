@@ -46,3 +46,12 @@ int payment_add_fees(int member_id){
     }
    
 }
+
+int payment_report(date_t init_date, date_t final_date, int *total_fees, int *total_fine){
+    if(total_payment(init_date, final_date, total_fees, total_fine) == 1){
+        return 1;   //successfully executed
+    }
+    else{
+        return 0;   //failed to proceed the request
+    }
+}
