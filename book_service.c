@@ -2,9 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include "book.h"
-#include "book_list.h" 
+#include "book_list.h"
 #include "book_dal.h"
 #include "book_control.h"
+#include "hashtable.h"
 
 int book_add(book_t *b){
     if(book_save(b) == 1){
@@ -142,6 +143,14 @@ int book_search_by_title(char title[BOOK_TITLE_SIZE]){
     else{
         return 0;
     }
+}
 
-
+int get_category_list(hashtable_category_t *hc){
+        
+    if(generate_category_list(hc) == 1){
+        return 1;
+    }
+    else{
+        return 0;
+    }    
 }

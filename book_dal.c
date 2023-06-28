@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include "book.h"
 #include "book_list.h"
+#include "hashtable.h"
 
 //saves structure u in BOOK_FILE
 int book_save(book_t *b)
@@ -191,7 +192,7 @@ int book_copy_get_count(char isbn[BOOK_ISBN_SIZE], int *total_count, int *avail_
     }
 
     while(fread(&book_copy_buff, RECSIZE_BOOK_COPY, 1, fbc) > 0){
-        printf("%s", book_copy_buff.isbn);
+        // printf("%s", book_copy_buff.isbn);
         if(strcmp(isbn, book_copy_buff.isbn) == 0){
             (*total_count)++;
             if(book_copy_buff.status == 1){
@@ -294,4 +295,29 @@ int book_copy_avail_id(char isbn[BOOK_ISBN_SIZE], book_copy_t *bc){
     else{
         return 1;   //book copy is available.
     }
+}
+
+int generate_category_list(hashtable_category_t *hc){
+    book_t b_buff;
+    FILE *fb;
+
+    fb = fopen(BOOK_FILE, "rb");
+    if(fb == NULL){
+        return -1;
+    }
+
+    while( fread(&b_buff, RECSIZE_BOOK, 1, fb) > 0){
+        int asc_key = generate_asc_key(b_buff.category);
+        entry_category_t ec; 
+        
+        ec.asc_key = asc_key;
+        strcpy(ec.value.book_category, b_buff.category);
+        
+        
+        hc_insert(ec, hc);
+    }
+
+    fclose(fb);
+
+    return 1;
 }

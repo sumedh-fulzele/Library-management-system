@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "book.h"
 #include "book_service.h"
+#include "hashtable.h"
+#include "entry.h"
 
 void book_accept(book_t *b){
     printf("\nEnter the book details.");
@@ -24,6 +26,11 @@ void book_print(book_t *b){
     printf("\nISBN : %s", b->isbn);
     printf("\nCategory : %s", b->category);
     printf("\nPrice : %f\n", b->price);
+}
+
+void book_category_count_print(entry_category_t *ec){
+    printf("Category : %s ", ec->value.book_category);
+    printf("\tCount : %d\n", ec->value.count);
 }
 
 void add_new_book(){
@@ -131,5 +138,34 @@ void check_book_availability(){
     }
     else{
         printf("\nBook is unavailable..!!");
+    }
+}
+
+void book_categories_report(){
+    hashtable_category_t hc;
+    int hashtable_category_size = 11;
+    
+    init_hashtable_category(hashtable_category_size, &hc);
+
+   if(get_category_list(&hc) == 1){
+    printf("\nBook Report (Categorywise) :\n");
+    
+    for(int i = 0; i < hashtable_category_size; i++){
+            
+            if(hc.table[i].head == NULL){
+                continue;
+            }
+
+            node_category_t *trav = hc.table[i].head;
+            while (trav != NULL)
+            {
+                book_category_count_print(&trav->data);
+                trav = trav->next;
+            }
+             
+        }
+    }
+    else{
+        printf("\nError while generating report..!!");
     }
 }
