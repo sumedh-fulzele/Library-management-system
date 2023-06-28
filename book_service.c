@@ -1,8 +1,10 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include"book.h"
-#include"book_dal.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "book.h"
+#include "book_list.h" 
+#include "book_dal.h"
+#include "book_control.h"
 
 int book_add(book_t *b){
     if(book_save(b) == 1){
@@ -118,4 +120,28 @@ int book_copy_available(char isbn[BOOK_ISBN_SIZE]){
     else{
         return 0;
     }
+}
+
+int book_search_by_title(char title[BOOK_TITLE_SIZE]){
+    book_list_t bl;
+    init_book_list(&bl);
+    
+    if(book_find_by_title(title, &bl) == 1){
+        //1. create one trav pointer and start from head
+        book_node_t *trav = bl.head;
+        while(trav != NULL)
+        {
+            //2. print data of current(trav) node
+            book_print(&trav->data);
+            //3. go on next node
+            trav = trav->next;
+        }//4. repeat step 2 and 3 till last node (trav != NULL)
+        free_book_list(&bl);
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
+
 }
