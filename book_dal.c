@@ -1,11 +1,12 @@
-#include<stdio.h>
-#include<string.h>
-#include<ctype.h>
-#include"book.h"
-#include"book_control.h"    //  This is here until the DS implementation.
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include "book.h"
+#include "book_list.h"
 
 //saves structure u in BOOK_FILE
-int book_save(book_t *b){
+int book_save(book_t *b)
+{
     FILE *fb;
     
     fb = fopen(BOOK_FILE, "ab");
@@ -26,7 +27,8 @@ int book_save(book_t *b){
 }
 
 // finds book by isbn in BOOK_FILE and saves record in *b
-int book_find_by_isbn(char isbn[BOOK_ISBN_SIZE], book_t *b){
+int book_find_by_isbn(char isbn[BOOK_ISBN_SIZE], book_t *b)
+{
     int found = 0;  //flag
     FILE *fb;
     
@@ -53,8 +55,8 @@ int book_find_by_isbn(char isbn[BOOK_ISBN_SIZE], book_t *b){
     }
 }
 
-int book_update(book_t *b){
-    
+int book_update(book_t *b)
+{    
     book_t book_buff;
     
     int updated = 0;    //flag
@@ -93,7 +95,8 @@ int book_update(book_t *b){
     }
 }
 
-int book_copy_find_by_id(int id, book_copy_t *bc){
+int book_copy_find_by_id(int id, book_copy_t *bc)
+{
     int flag_found = 0;  //flag
     FILE *fbc;
     
@@ -119,7 +122,8 @@ int book_copy_find_by_id(int id, book_copy_t *bc){
     }
 }
 
-int book_copy_save(book_copy_t *bc){
+int book_copy_save(book_copy_t *bc)
+{
     FILE *fbc;
 
     fbc = fopen(BOOK_COPY_FILE,"ab");
@@ -138,8 +142,8 @@ int book_copy_save(book_copy_t *bc){
     }   
 }
 
-int book_copy_update(book_copy_t *bc){
-    
+int book_copy_update(book_copy_t *bc)
+{
     book_copy_t book_copy_buff;
     
     int flag_update = 0;    //flag
@@ -176,7 +180,8 @@ int book_copy_update(book_copy_t *bc){
     }
 }
 
-int book_copy_get_count(char isbn[BOOK_ISBN_SIZE], int *total_count, int *avail_count){
+int book_copy_get_count(char isbn[BOOK_ISBN_SIZE], int *total_count, int *avail_count)
+{
     book_copy_t book_copy_buff;
     FILE *fbc;
 
@@ -200,7 +205,8 @@ int book_copy_get_count(char isbn[BOOK_ISBN_SIZE], int *total_count, int *avail_
     return 1;
 }
 
-int get_max_book_copy_id(){
+int get_max_book_copy_id()
+{
     book_copy_t book_copy_buff;
     FILE *fbc;
     fbc = fopen(BOOK_COPY_FILE,"rb");
@@ -216,22 +222,36 @@ int get_max_book_copy_id(){
     return book_copy_buff.id;
 }
 
-void book_find_by_title(char title[BOOK_TITLE_SIZE]){  //return type will be int in future
+int book_find_by_title(char title[BOOK_TITLE_SIZE], book_list_t *bl){  //return type will be int in future
     int flag_found = 0;
     book_t b;
+    
     FILE *fb;
     fb = fopen(BOOK_FILE, "rb");
     if(fb == NULL){
-        printf("Error opening file..!!");   //will be removed in future
+        return -1;
+        // printf("Error opening file..!!");   //will be removed in future
     }
 
-    tolower(title);
+    // for converting string to lower.
+    for(int i = 0; title[i]; i++){
+        title[i] = tolower(title[i]);
+    }
 
     while( fread(&b, RECSIZE_BOOK, 1, fb) > 0){
-        tolower(b.title);
-        if(strstr(b.title, title) != NULL){
-            book_print(&b);                 //will be removed in future
-            printf("\n");                   //will be removed in future
+        
+        char str_buff[BOOK_TITLE_SIZE];
+        strcpy(str_buff, b.title);
+
+        // for converting string to lower.
+        for(int i = 0; str_buff[i]; i++){
+           str_buff[i] = tolower(str_buff[i]);
+        }
+
+        if(strstr(str_buff, title) != NULL){
+            // book_print(&b);                 //will be removed in future
+            // printf("\n");                   //will be removed in future
+            add_first_book_node(b, bl);        
             flag_found = 1;
         }
         
@@ -240,7 +260,11 @@ void book_find_by_title(char title[BOOK_TITLE_SIZE]){  //return type will be int
     fclose(fb);
 
     if(!flag_found){
-        printf("Book not found..!!");       //will be removed in future
+        return 0;
+        // printf("Book not found..!!");       //will be removed in future
+    }
+    else{
+        return 1;
     }
 }
 
