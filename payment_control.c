@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "payment_service.h"
 #include "payment_dal.h"
+#include "date.h"
 
 void take_payment(){
     int member_id;
@@ -16,7 +17,7 @@ void take_payment(){
         printf("\nMember is already submitted the fees for this month.");
     }
     else{
-        printf("Failed to process your request..!!\nTry again later.");
+        printf("\nFailed to process your request..!!\nTry again later.");
     }
 }
 
@@ -41,5 +42,26 @@ void print_payment(){
     }
     else{
         printf("Record not found ..!!");
+    }
+}
+
+void fine_fees_report(){
+    int total_fees = 0;
+    int total_fine = 0;
+    date_t init_date, final_date;
+
+    printf("\nEnter the date range (dd-mm-yyyy) :");
+    printf("\nFrom :");
+    scanf("%d%*c%d%*c%d", &init_date.day, &init_date.month, &init_date.year);
+    printf("To :");
+    scanf("%d%*c%d%*c%d", &final_date.day, &final_date.month, &final_date.year);
+
+    if(payment_report(init_date, final_date, &total_fees, &total_fine) == 1){
+        printf("\nFees/Fine Report");
+        printf("\nTotal Fees : %d", total_fees);
+        printf("\nTotal Fine : %d", total_fine);
+    }
+    else{
+        printf("\nFailed to proceed your request");
     }
 }
