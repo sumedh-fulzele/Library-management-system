@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
         
         exit(0);
     }
+
     int user_id;
     enum rol user_role;
     loginpage_switch(&user_id, &user_role);

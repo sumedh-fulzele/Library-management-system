@@ -8,11 +8,11 @@
 
 void user_accept(user_t *u){
 
-    printf("\nEnter the Name \t: ");
+    printf("\nEnter the Name \t\t: ");
     scanf("%[^\n]", u->name);
     printf("\nEnter Email address \t: ");
     scanf("%*c%[^\n]", u->email);
-    printf("\nEnter password \t: ");
+    printf("\nEnter password \t\t: ");
     scanf("%*c%[^\n]", u->password);
     printf("\nEnter phone no. \t: ");
     scanf("%*c%[^\n]", u->phone);
@@ -37,9 +37,9 @@ void signin(int *user_id, enum rol *user_role){
 LOGIN_PROMPT:
 
     printf("Enter login credentials.\n");
-    printf("Email\t: ");
+    printf("Email\t\t: ");
     scanf("%[^\n]", email);
-    printf("Password\t:");
+    printf("Password\t: ");
     scanf("%*c%[^\n]", password);
     scanf("%*c");   //this removes \n from input buffer for re taking login credentials after failed user authentication.  
     
@@ -66,7 +66,7 @@ void signup(){
     
     int flag = member_register(&new_member);
     if(flag == 1){
-        printf("New member successfully registered..!!\n");
+        printf("New member successfully registered..!!\nMember ID is %d.\n", new_member.id);
         user_press_any_key();
 
     }

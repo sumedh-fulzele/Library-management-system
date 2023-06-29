@@ -7,16 +7,16 @@
 
 void book_accept(book_t *b){
     printf("\nEnter the book details.");
-    printf("\nTitle \t:");
+    printf("\nTitle \t\t: ");
     scanf("%[^\n]", b->title );
-    printf("Author \t: ");
+    printf("Author \t\t: ");
     scanf("%*c%[^\n]", b->author );
-    printf("ISBN \t: ");
+    printf("ISBN \t\t: ");
     scanf("%*c%[^\n]", b->isbn);
     printf("Category \t: ");
     scanf("%*c%[^\n]", b->category);
     scanf("%*c");
-    printf("Price \t: ");
+    printf("Price \t\t: ");
     scanf("%f", &b->price);
     
 }
@@ -38,8 +38,9 @@ void add_new_book(){
     book_t b;
     int rack;
     book_accept(&b);
-    printf("Enter the rack no. \t: ");
+    printf("Rack No. \t: ");
     scanf("%d", &rack);
+    getchar();
     int flag_add = book_add(&b) && book_copy_add(b.isbn, rack);
     if( flag_add == 1){
         printf("\nBook is successfully added..!!\n");
@@ -76,7 +77,11 @@ void find_book_by_title(){
 
     char title[BOOK_TITLE_SIZE];
     book_list_t bl;
-   
+
+    printf("\e[1;1H\e[2J");
+    printf("\e[2J");
+    printf("\e[2J");
+    
     printf("Enter the title of the book : ");
     scanf("%[^\n]",title);
     getchar();
@@ -110,6 +115,7 @@ void edit_book(){
     book_t b;
     printf("Enter new details of the book except ISBN :");
     book_accept(&b);
+    getchar();
     if(book_edit(&b) == 1){
         printf("\nBook updated successfully..!!");
         book_press_any_key();
@@ -126,12 +132,14 @@ void book_copy_accept(char isbn[BOOK_ISBN_SIZE], int *rack){
     scanf("%[^\n]", isbn);
     printf("\nEnter the rack number \t: ");
     scanf("%d", rack);
+
 }
 
 void add_new_book_copy(){
     char isbn[BOOK_ISBN_SIZE];
     int rack;
     book_copy_accept(isbn, &rack);
+    getchar();
     if(book_copy_add(isbn, rack) == 1){
         printf("\nBook Copy added in the library..!!\n");
         book_press_any_key();
@@ -151,6 +159,7 @@ void change_rack(){
     scanf("%d", &book_copy_id);
     printf("\nEnter the new rack number \t: ");
     scanf("%d", &rack);
+    getchar();
     
     if(book_copy_change_rack(book_copy_id, rack,  &bc) == 1){
         printf("\nRack of book copy with ID %d changed successfully..!!\n", book_copy_id);

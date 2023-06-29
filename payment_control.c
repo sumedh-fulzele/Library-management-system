@@ -8,8 +8,8 @@ void take_payment(){
     printf("\nEnter the member ID : ");
     scanf("%d", &member_id);
 
+    getchar();
     int flag_pay = payment_add_fees(member_id);
-
     if(flag_pay == 1){
         printf("\nPayment done successfully..!!\n Member with member ID : %d is now paid member", member_id);
         pay_press_any_key();

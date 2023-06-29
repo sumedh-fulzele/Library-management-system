@@ -10,16 +10,17 @@ void issue_copy(){
     char isbn[BOOK_ISBN_SIZE] = {0};
     int issuerecord_id;
     
-    printf("\nEnter member ID \t\t:");
+    printf("\nEnter member ID \t\t: ");
     scanf("%d", &member_id);
     getchar();
     printf("\nEnter the ISBN of the book \t: ");
     scanf("%[^\n]", isbn);
+    getchar();
 
     int flag_issued = issuerecord_add(isbn, member_id, &issuerecord_id);
 
     if(flag_issued == 1){
-        printf("\nBook issued successfully.\n Your Issue ID is %d..!!", issuerecord_id);
+        printf("\nBook issued successfully.\nYour Issue ID is %d..!!\n", issuerecord_id);
         ir_press_any_key();
 
     }
@@ -43,13 +44,14 @@ void return_copy(){
     float amount;
     book_copy_t bc;
 
-    printf("\nEnter the issuerecord ID");
+    printf("\nEnter the issuerecord ID : ");
     scanf("%d", &issuerecord_id);
+    getchar();
 
     if(issuerecord_edit(issuerecord_id, &bc, &amount) == 1){
         printf("\nFine amount : %.2f", amount);
-        printf("Payment done successfully..!!");
-        printf("\nIssued book copy with %d has been returned.", bc.id);
+        printf("\nPayment done successfully..!!");
+        printf("\nIssued book copy with ID %d has been returned.", bc.id);
         ir_press_any_key();
     }
     else{
