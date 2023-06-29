@@ -12,7 +12,7 @@
 #define PHONE_SIZE 11
 #define RECSIZE_USER sizeof(user_t)
 
-enum rol {owner, librarian, member};
+enum rol {owner, librarian, member, norole};
 
 typedef struct user
 {
@@ -21,7 +21,7 @@ typedef struct user
     char email[EMAIL_SIZE];
     char password[PASSWD_SIZE];
     char phone[PHONE_SIZE];
-    enum rol role;      //O - owner ,L - librarian, M - member
+    enum rol role;      
     date_t nextpayment_duedate;   //due date for next monthly fees.
 }user_t;
 

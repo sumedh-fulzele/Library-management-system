@@ -1,19 +1,20 @@
 //This file contains user related control(UI/UX) functions(Tier - 3).
 
-#include<stdio.h>
-#include<string.h>
-#include"user_control.h"
-#include"user_service.h"
+#include <stdio.h>
+#include <string.h>
+#include "user.h"
+#include "user_control.h"
+#include "user_service.h"
 
 void user_accept(user_t *u){
 
-    printf("\n Enter the Name : ");
+    printf("\nEnter the Name \t: ");
     scanf("%[^\n]", u->name);
-    printf("\nEnter Email address : ");
+    printf("\nEnter Email address \t: ");
     scanf("%*c%[^\n]", u->email);
-    printf("\nEnter password : ");
+    printf("\nEnter password \t: ");
     scanf("%*c%[^\n]", u->password);
-    printf("\nEnter phone no. : ");
+    printf("\nEnter phone no. \t: ");
     scanf("%*c%[^\n]", u->phone);
     scanf("%*c");   //removes "\n" from input buffer
 }
@@ -24,9 +25,10 @@ void user_print(user_t *u){
     printf("Email address : %s\n",u->email);
     printf("Phone : %s\n",u->phone);
     printf("Your next monthly payment due date : %02d/%02d/%d\n", u->nextpayment_duedate.day, u->nextpayment_duedate.month, u->nextpayment_duedate.year);
+    user_press_any_key();
 }
 
-void signin(int *user_id){
+void signin(int *user_id, enum rol *user_role){
     user_t u;
     
     char email[EMAIL_SIZE];
@@ -43,10 +45,15 @@ LOGIN_PROMPT:
     
     if(user_authenticate(email, password, &u) == 1){
         *user_id = u.id;
-        printf("User logged in successfully....!!\n");
+        *user_role = u.role;
+        printf("\nUser logged in successfully....!!");
+        user_press_any_key();
+        
     }
     else{
-        printf("Incorrect email or password.\n");
+        printf("\nIncorrect email or password.");
+        user_press_any_key();
+        
         goto LOGIN_PROMPT;
     }
 }
@@ -60,12 +67,17 @@ void signup(){
     int flag = member_register(&new_member);
     if(flag == 1){
         printf("New member successfully registered..!!\n");
+        user_press_any_key();
+
     }
     else if(flag == 2){
         printf("Email is already registered with different account. Please use different email address.\n");
+        user_press_any_key();
+        
     }
     else{
         printf("Failed to register new user..!!\n");
+        user_press_any_key();
     }
 }
 
@@ -74,11 +86,14 @@ void change_password(int id){
     char new_passwd[PASSWD_SIZE];
     printf("Please enter new password : ");
     scanf("%[^\n]", new_passwd);
+    getchar();
     if(update_password(id, new_passwd) == 1){
         printf("Password changed successfully..!!\n");
+        user_press_any_key();
     }
     else{
         printf("Error while changing password.\n");
+        user_press_any_key();
     }
 }
 
@@ -87,33 +102,43 @@ void edit_profile(int id){
     char new_phone[PHONE_SIZE];
 
     printf("Enter new details.\n");
-    printf("New email address : ");
+    printf("New email address \t: ");
     scanf("%[^\n]", new_email);
-    printf("Enter new phone number : ");
+    printf("Enter new phone number \t: ");
     scanf("%*c%[^\n]",new_phone);
 
     if(update_profile(id, new_email, new_phone) == 1){
         printf("Profile updated successfully..!!\n");
+        user_press_any_key();
     }
     else{
         printf("Error while updating profile.\n");
+        user_press_any_key();
     }
 }
 
 void appoint_librarian(){
     user_t new_librarian;
 
-    printf("\nPlease enter the details.\n");
+    printf("\nPlease enter the librarian details.\n");
     user_accept(&new_librarian);
     
     int flag = librarian_register(&new_librarian);
     if(flag == 1){
         printf("New Librarian added...!!\n");
+        user_press_any_key();
     }
     else if(flag == 2){
         printf("Email is already registered with different account. Please use different email address.\n");
+        user_press_any_key();
     }
     else{
         printf("Failed to register new librarian..!!\n");
+        user_press_any_key();
     }
+}
+
+void user_press_any_key(){
+    printf("\nPress Enter the continue...");
+    getchar();
 }
