@@ -321,3 +321,54 @@ int generate_category_list(hashtable_category_t *hc){
 
     return 1;
 }
+
+int generate_book_list(hashtable_book_t *hb){
+    book_t b_buff;
+    book_copy_t bc_buff;
+    FILE *fb;
+    FILE *fbc;
+
+    fb  = fopen(BOOK_FILE, "rb");
+    if(fb == NULL){
+        return -1;
+    }
+    // if(fbc == NULL){
+    //     fclose(fb);
+    //     return -1;
+    // }
+
+    while(fread(&b_buff, RECSIZE_BOOK, 1, fb) > 0){
+
+        entry_book_t eb; 
+        
+        eb.asc_key = generate_asc_key(b_buff.isbn);
+        strcpy(eb.value.isbn, b_buff.isbn);
+        strcpy(eb.value.title, b_buff.title);
+        eb.value.total_count = 0;
+        eb.value.total_avail = 0;
+
+        fbc = fopen(BOOK_COPY_FILE, "rb");
+        if(fbc == NULL){
+            return -1;
+        }
+
+        while(fread(&bc_buff, RECSIZE_BOOK_COPY, 1, fbc) > 0){
+            int temp_asc_key = generate_asc_key(bc_buff.isbn);
+            
+            if(temp_asc_key == eb.asc_key){    
+                eb.value.total_count++;
+
+                if(bc_buff.status == 1){
+                    eb.value.total_avail++;
+
+                }
+            }
+        }
+        fclose(fbc);
+
+        hb_insert(eb, hb);
+    }
+
+    fclose(fb);
+    return 1;
+}

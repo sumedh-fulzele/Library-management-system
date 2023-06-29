@@ -16,5 +16,6 @@ int book_copy_get_count(char isbn[BOOK_ISBN_SIZE],  int *total_count, int *avail
 int get_max_book_copy_id();
 int book_copy_avail_id(char isbn[BOOK_ISBN_SIZE], book_copy_t *bc);
 int generate_category_list(hashtable_category_t *hc);
+int generate_book_list(hashtable_book_t *hb);
 
 #endif

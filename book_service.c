@@ -112,32 +112,39 @@ int book_search_by_isbn(char isbn[BOOK_ISBN_SIZE], book_t *b){
     }
 }
 
+//returns '1' if both book & copy is available, '2' if book available but all copies are issued, '0' if book not available.
 int book_copy_available(char isbn[BOOK_ISBN_SIZE]){
     int total_count = 0;
     int avail_count = 0;
-    if(book_copy_get_count(isbn, &total_count, &avail_count) == 1){
-        return 1;
+    int avail = book_copy_get_count(isbn, &total_count, &avail_count);
+    if( avail == 1){
+        if(total_count > 0 && avail_count > 0){
+            return 1;
+        }
+        else if(total_count > 0 && avail_count == 0){
+            return 2;
+        }
     }
     else{
         return 0;
     }
 }
 
-int book_search_by_title(char title[BOOK_TITLE_SIZE]){
-    book_list_t bl;
-    init_book_list(&bl);
+int book_search_by_title(char title[BOOK_TITLE_SIZE], book_list_t *bl ){
+    // book_list_t bl;
+    init_book_list(bl);
     
-    if(book_find_by_title(title, &bl) == 1){
-        //1. create one trav pointer and start from head
-        book_node_t *trav = bl.head;
-        while(trav != NULL)
-        {
-            //2. print data of current(trav) node
-            book_print(&trav->data);
-            //3. go on next node
-            trav = trav->next;
-        }//4. repeat step 2 and 3 till last node (trav != NULL)
-        free_book_list(&bl);
+    if(book_find_by_title(title, bl) == 1){
+        // //1. create one trav pointer and start from head
+        // book_node_t *trav = bl->head;
+        // while(trav != NULL)
+        // {
+        //     //2. print data of current(trav) node
+        //     book_print(&trav->data);
+        //     //3. go on next node
+        //     trav = trav->next;
+        // }//4. repeat step 2 and 3 till last node (trav != NULL)
+        // free_book_list(bl);
         return 1;
     }
     else{
@@ -148,6 +155,16 @@ int book_search_by_title(char title[BOOK_TITLE_SIZE]){
 int get_category_list(hashtable_category_t *hc){
         
     if(generate_category_list(hc) == 1){
+        return 1;
+    }
+    else{
+        return 0;
+    }    
+}
+
+int get_book_list(hashtable_book_t *hb){
+        
+    if(generate_book_list(hb) == 1){
         return 1;
     }
     else{
