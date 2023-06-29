@@ -4,5 +4,6 @@
 void issue_copy();
 void return_copy();
 void print_issuerecord();
+void ir_press_any_key();
 
 #endif
