@@ -106,7 +106,7 @@ void edit_profile(int id){
     scanf("%[^\n]", new_email);
     printf("Enter new phone number \t: ");
     scanf("%*c%[^\n]",new_phone);
-
+    getchar();
     if(update_profile(id, new_email, new_phone) == 1){
         printf("Profile updated successfully..!!\n");
         user_press_any_key();

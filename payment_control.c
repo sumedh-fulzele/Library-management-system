@@ -34,7 +34,7 @@ void print_payment(){
 
     printf("\nEnter the payment id : ");
     scanf("%d", &payment_id);
-    
+    getchar();
     int pay = payment_search_by_id(payment_id, &p);
 
     if(p.type == 0)

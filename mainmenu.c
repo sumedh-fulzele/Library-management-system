@@ -49,7 +49,7 @@ int owner_menu(){
     printf("\n##################      REPORT            ###################");
     printf("\n##################   5. FEES/FINE REPORT  ###################");
     printf("\n##################   6. APPOINT LIBRARIAN ###################");
-    printf("\n##################   0. LOGOUT            ###################");
+    printf("\n##################   0. SIGN OUT          ###################");
     printf("\n-------------------------------------------------------------");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -110,7 +110,7 @@ int member_menu(){
     printf("\n##################   3. FIND BOOK       ###################");
     printf("\n##################   4. CHECK BOOK      ###################");
     printf("\n##################      AVAILABILITY    ###################");
-    printf("\n##################   0. LOGOUT          ###################");
+    printf("\n##################   0. SIGN OUT        ###################");
     printf("\n-----------------------------------------------------------");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -170,7 +170,9 @@ int librarian_menu(){
     printf("\n##################  10. RETURN COPY      ###################");
     printf("\n##################  11. ADD NEW MEMBER   ###################");
     printf("\n##################  12. TAKE PAYMENT     ###################");
-    printf("\n##################   0. LOGOUT           ###################");
+    printf("\n##################  13. SEARCH PAYMENT   ###################");
+    printf("\n##################      BY ID            ###################");
+    printf("\n##################   0. SIGN OUT         ###################");
     printf("\n------------------------------------------------------------");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -236,6 +238,9 @@ void librarian_switch(int *user_id, enum rol *user_role){
             case 12:
             take_payment();
             break;
+
+            case 13:
+            print_payment();
 
         }
     }
